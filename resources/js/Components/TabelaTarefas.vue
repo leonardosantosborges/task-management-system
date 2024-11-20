@@ -16,7 +16,11 @@
             <tr v-for="tarefa in tarefas" :key="tarefa.id">
                 <td class="px-4 py-2">{{ tarefa.title }}</td>
                 <td class="px-4 py-2">{{ tarefa.description }}</td>
-                <td class="px-4 py-2">{{ tarefa.status }}</td>
+                <td class="px-4 py-2">
+                    <span v-if="tarefa.status === 'pending'">Pendente</span>
+                    <span v-else-if="tarefa.status === 'in_progress'">Andamento</span>
+                    <span v-else-if="tarefa.status === 'completed'">Concluída</span>
+                </td>
                 <td class="px-4 py-2">
                     <button
                         class="btn btn-outline-warning"
