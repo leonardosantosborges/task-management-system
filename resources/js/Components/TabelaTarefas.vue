@@ -12,8 +12,8 @@
             </thead>
             <tbody>
             <tr v-for="(tarefa, index) in tarefas" :key="index">
-                <td class="px-4 py-2">{{ tarefa.nome }}</td>
-                <td class="px-4 py-2">{{ tarefa.descricao }}</td>
+                <td class="px-4 py-2">{{ tarefa.title }}</td>
+                <td class="px-4 py-2">{{ tarefa.description }}</td>
                 <td class="px-4 py-2">{{ tarefa.status }}</td>
                 <td class="px-4 py-2">
                     <button class="btn btn-outline-warning">
