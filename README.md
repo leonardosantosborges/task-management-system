@@ -47,6 +47,9 @@ php artisan key:generate
 ### Passo 3: Execute as migrações para criar o banco, tabelas e popular o banco:
 ```bash
 php artisan migrate
+```
+#### Popule o banco:
+```bash
 php artisan db:seed
 ```
 
