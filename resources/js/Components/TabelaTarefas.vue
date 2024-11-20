@@ -1,0 +1,61 @@
+<template>
+    <div class="overflow-x-auto bg-white p-4 rounded-lg shadow-lg">
+        <table class="min-w-full table-auto border-collapse">
+            <thead>
+            <tr class="bg-gray-100">
+                <th class="px-4 py-2 text-left">Tarefa</th>
+                <th class="px-4 py-2 text-left">Descrição</th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Editar</th>
+                <th class="px-4 py-2 text-left">Excluir</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(tarefa, index) in tarefas" :key="index">
+                <td class="px-4 py-2">{{ tarefa.nome }}</td>
+                <td class="px-4 py-2">{{ tarefa.descricao }}</td>
+                <td class="px-4 py-2">{{ tarefa.status }}</td>
+                <td class="px-4 py-2">
+                    <button class="btn btn-outline-warning">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
+                </td>
+                <td class="px-4 py-2">
+                    <button class="btn btn-outline-danger">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+    tarefas: {
+        type: Array,
+        required: true,
+    },
+});
+</script>
+
+<style scoped>
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f3f3f3;
+}
+</style>
