@@ -31,7 +31,7 @@ Este projeto é um **Sistema de Gerenciamento de Tarefas** desenvolvido com **La
 Clone o repositório para o seu ambiente local:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/leonardosantosborges/task-management-system.git
 cd task-management-system
 ```
 
