@@ -40,11 +40,14 @@ Instale as dependências do Laravel com o Composer:
 
 ```bash
 composer install
+cp .env.example .env
+php artisan key:generate
 ```
 
-### Passo 3: Execute as migrações para criar o banco de dados e as tabelas necessárias:
+### Passo 3: Execute as migrações para criar o banco, tabelas e popular o banco:
 ```bash
 php artisan migrate
+php artisan db:seed
 ```
 
 ### Passo 4: Instale as dependências:
