@@ -8,6 +8,12 @@ use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('migrate');
+    }
     public function test_store_task()
     {
         $user = User::factory()->create();

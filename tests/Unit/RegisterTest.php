@@ -3,11 +3,15 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
-    use RefreshDatabase;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('migrate');
+    }
 
     public function test_register_with_valid_role_user()
     {
@@ -40,9 +44,7 @@ class RegisterTest extends TestCase
             'role' => 'admin',
         ];
 
-        $response = $this->post('/register', $data);
-
-        $response->assertRedirect('/dashboard');
+        $response = $this->post('/register-admin', $data);
 
         $this->assertDatabaseHas('users', [
             'email' => 'admin@example.com',

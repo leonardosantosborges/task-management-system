@@ -49,7 +49,7 @@ class TaskController extends Controller
         if ($orderBy === 'updated_at') {
             $query->orderBy($orderBy, $direction);
         } else {
-            $query->orderBy($orderBy, 'asc');
+            $query->orderBy($orderBy, 'desc');
         }
 
         $tasks = $query->get();
