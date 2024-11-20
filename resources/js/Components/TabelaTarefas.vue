@@ -11,17 +11,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(tarefa, index) in tarefas" :key="index">
+            <tr v-for="tarefa in tarefas" :key="tarefa.id">
                 <td class="px-4 py-2">{{ tarefa.title }}</td>
                 <td class="px-4 py-2">{{ tarefa.description }}</td>
                 <td class="px-4 py-2">{{ tarefa.status }}</td>
                 <td class="px-4 py-2">
-                    <button class="btn btn-outline-warning">
+                    <button
+                        class="btn btn-outline-warning"
+                        @click="emit('editarTarefa', tarefa)"
+                    >
                         <i class="bi bi-pencil-fill"></i>
                     </button>
                 </td>
                 <td class="px-4 py-2">
-                    <button class="btn btn-outline-danger">
+                    <button
+                        class="btn btn-outline-danger"
+                        @click="emit('excluirTarefa', tarefa.id)"
+                    >
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
@@ -32,7 +38,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
     tarefas: {
@@ -40,7 +46,10 @@ const props = defineProps({
         required: true,
     },
 });
+
+const emit = defineEmits(['editarTarefa', 'excluirTarefa']);
 </script>
+
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");

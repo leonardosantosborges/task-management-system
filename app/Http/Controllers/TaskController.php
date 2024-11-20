@@ -45,5 +45,45 @@ class TaskController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        try {
+            $task = Task::findOrFail($id);
+
+            $task->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Tarefa excluída com sucesso.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao excluir tarefa: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string|max:500',
+            'status' => 'required|in:pending,completed,in_progress',
+        ]);
+
+        $task = Task::findOrFail($id);
+
+        $task->title = $validated['titulo'];
+        $task->description = $validated['descricao'];
+        $task->status = $validated['status'];
+        $task->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tarefa atualizada com sucesso!',
+        ]);
+    }
+
 }
 
