@@ -3,18 +3,15 @@
         <div class="container">
             <div class="flex shrink-0 items-center">
                 <Link :href="route('dashboard')">
-                    <ApplicationLogo
-                        class="logo"
-                    />
+                    <ApplicationLogo class="logo" />
                 </Link>
-                <a href="/dashboard" class="task-link">
-                    Tarefas
+                <a class="task-link">
+                    Gerenciador de tarefas
                 </a>
             </div>
 
             <div class="menu">
-                <a href="#" class="menu-link">Cadastrar Administrador</a>
-                <a href="/profile" class="menu-link">Perfil</a>
+                <button v-if="role === 'admin'" @click="openModal" class="menu-link">Cadastrar Administrador</button>
                 <form method="POST" action="/logout" class="inline">
                     <button type="submit" class="menu-link">
                         Logout
@@ -27,7 +24,21 @@
 
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import { Link } from "@inertiajs/vue3";
+import {Link} from "@inertiajs/vue3";
+import {defineEmits, defineProps} from "vue";
+
+const props = defineProps({
+    role: {
+        type: String,
+        required: true,
+    },
+});
+
+const emit = defineEmits();
+
+const openModal = () => {
+    emit('openModal');
+};
 </script>
 
 <style scoped>

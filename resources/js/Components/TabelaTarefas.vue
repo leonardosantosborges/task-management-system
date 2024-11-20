@@ -8,6 +8,8 @@
                 <th class="px-4 py-2 text-left">Status</th>
                 <th class="px-4 py-2 text-left">Editar</th>
                 <th class="px-4 py-2 text-left">Excluir</th>
+
+                <th v-if="props.role === 'admin'" class="px-4 py-2 text-left">ID do Criador</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +33,8 @@
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
+
+                <td v-if="props.role === 'admin'" class="px-4 py-2">{{ tarefa.user_id }}</td>
             </tr>
             </tbody>
         </table>
@@ -45,11 +49,14 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    role: {
+        type: String,
+        required: true,
+    },
 });
 
 const emit = defineEmits(['editarTarefa', 'excluirTarefa']);
 </script>
-
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");

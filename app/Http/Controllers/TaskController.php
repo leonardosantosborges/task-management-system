@@ -29,21 +29,37 @@ class TaskController extends Controller
         return response()->json(['success' => true, 'task' => $task]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
-        if ($user->role === 'admin') {
-            $tasks = Task::all();
-        } else {
-            $tasks = Task::where('user_id', $user->id)->get();
+        $query = Task::query();
+
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
         }
+
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $orderBy = $request->get('order_by', 'created_at');
+        $direction = $request->get('order_direction', 'desc');
+
+        if ($orderBy === 'updated_at') {
+            $query->orderBy($orderBy, $direction);
+        } else {
+            $query->orderBy($orderBy, 'asc');
+        }
+
+        $tasks = $query->get();
 
         return response()->json([
             'success' => true,
-            'tasks' => $tasks
+            'tasks' => $tasks,
         ]);
     }
+
 
     public function destroy($id)
     {
@@ -86,4 +102,3 @@ class TaskController extends Controller
     }
 
 }
-

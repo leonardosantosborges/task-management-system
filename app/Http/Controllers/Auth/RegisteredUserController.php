@@ -50,4 +50,27 @@ class RegisteredUserController extends Controller
 
         return Inertia::location('/dashboard');
     }
+
+    public function storeAdmin(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required|string|in:admin,user',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        event(new Registered($user));
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+        ]);    }
 }
