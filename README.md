@@ -26,6 +26,15 @@ Este projeto é um **Sistema de Gerenciamento de Tarefas** desenvolvido com **La
 
 ## Passo a Passo para Executar o Projeto
 
+### Após a execução do projeto você pode acessar dois usuários já cadastrados para testar cenários!
+#### Usuário admin
+Email: igor@exata.com
+Senha: password
+
+#### Usuário comum
+Email: leonardo@exata.com
+Senha: password
+
 ### Passo 1: Clonar o Repositório
 
 Clone o repositório para o seu ambiente local:
