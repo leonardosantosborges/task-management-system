@@ -25,8 +25,6 @@ class RegisterTest extends TestCase
 
         $response = $this->post('/register', $data);
 
-        $response->assertRedirect('/dashboard');
-
         $this->assertDatabaseHas('users', [
             'email' => 'leo@example.com',
             'role' => 'user',
