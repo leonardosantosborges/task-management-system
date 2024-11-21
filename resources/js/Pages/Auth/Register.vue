@@ -6,6 +6,7 @@
             <ErrorList :errors="errorMessages" />
 
             <form @submit.prevent="submitForm">
+                <input type="hidden" :value="csrfToken" name="_token">
                 <FormInput
                     id="name"
                     label="Nome"
@@ -50,12 +51,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import { Inertia } from '@inertiajs/inertia';
 import ErrorList from '@/Components/ErrorList.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import FormInput from '@/Components/FormInput.vue';
 import { Link as InertiaLink } from '@inertiajs/vue3';
+
 export default {
     components: {
         FormInput,
@@ -73,22 +73,33 @@ export default {
                 role: "user",
             },
             errorMessages: [],
+            csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         };
     },
     methods: {
         async submitForm() {
             this.errorMessages = [];
 
-            try {
-                const response = await axios.post("/register", this.form);
-                console.log("User registered successfully:", response.data);
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                Inertia.visit('/dashboard');
-            } catch (error) {
-                console.error("Erro durante o registro:", error.response?.data || error.message);
-                if (error.response && error.response.data.errors) {
-                    this.errorMessages = Object.values(error.response.data.errors).flat();
-                }
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                },
+                body: JSON.stringify(this.form),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("User registered successfully:", data.message);
+
+                window.location.href = data.redirect_url;
+            } else {
+                const errorData = await response.json();
+                console.error("Erro durante o registro:", errorData);
+                this.errorMessages = errorData.errors ? Object.values(errorData.errors).flat() : ["An unknown error occurred"];
             }
         },
     },

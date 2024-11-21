@@ -48,7 +48,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return Inertia::location('/dashboard');
+        return response()->json([
+            'message' => 'User registered successfully',
+            'redirect_url' => '/dashboard',
+        ]);
     }
 
     public function storeAdmin(Request $request)
